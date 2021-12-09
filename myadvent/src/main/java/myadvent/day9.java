@@ -3,7 +3,6 @@ package myadvent;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -12,12 +11,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import static java.util.Arrays.asList;
 
 public class day9 {
 
@@ -193,7 +187,7 @@ public class day9 {
         	d.initStatus();
         	d.eachBasin=new ArrayList<Integer>();
         	d.eachBasin.add(d.points.get(i)[2]);
-        	List<int[]> onePoint = asList(d.points.get(i));
+        	List<int[]> onePoint = Arrays.asList(d.points.get(i));
 
         	d.secondOne(onePoint,0);
         	result.add(d.eachBasin.size());
@@ -203,8 +197,7 @@ public class day9 {
         d.sortList(result);
        
         System.out.println(result.get(0)*result.get(1)*result.get(2));
-        
-	    long endTime = System.currentTimeMillis(); //done
+        long endTime = System.currentTimeMillis(); //done
 	    System.out.println("running time:" + (endTime - startTime) + "ms"); //running time
 	}
 }
