@@ -155,21 +155,19 @@ public class day9 {
 		in.close();
 		bufferedReader.close();		
 	}
+	public void sortList(List<Integer> list){
+		ComparatorList cl = new ComparatorList();
+		Collections.sort(list, cl);
+	}
 	
-    public void sortList(List<Integer> list){
-        ComparatorList cl = new ComparatorList();
-        Collections.sort(list, cl);
-    }
+	class ComparatorList implements Comparator<Integer>{
+		@Override
+		public int compare(Integer o1, Integer o2) {
+			return o1>o2 ? -1:1;
+			}
+		}
 	
-    class ComparatorList implements Comparator<Integer>{
-        @Override
-        public int compare(Integer o1, Integer o2) {
-            return o1>o2 ? -1:1;
-        }
-
-    }
-    
-    public static void main(String args[]) throws IOException{
+	public static void main(String args[]) throws IOException{
     	
     	long startTime = System.currentTimeMillis(); //get started
     	
