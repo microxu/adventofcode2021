@@ -169,15 +169,14 @@ public class day9 {
 
     }
     
-    public static void main(String args[]) throws IOException{  
-		
-		long startTime = System.currentTimeMillis(); //get started
-		
-		day9 d =new day9();	
-		d.getInput();
-		
-	    //to get all the lowest points
-        d.firstOne();
+    public static void main(String args[]) throws IOException{
+    	
+    	long startTime = System.currentTimeMillis(); //get started
+    	
+    	day9 d =new day9();	
+    	d.getInput();
+    	//to get all the lowest points
+    	d.firstOne();
         
         //get each basin of former points
         List<Integer> result=new ArrayList<Integer>();
