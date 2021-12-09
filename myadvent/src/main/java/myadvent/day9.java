@@ -20,7 +20,7 @@ public class day9 {
 	public int[][] pointStatus ;
 	public List<Integer> eachBasin=new ArrayList<Integer>();
 	
-	//first question to set points
+	//first question to get all the lowest points
 	public void firstOne() {
 		for(int i=0;i<inputInt.size();i++) {
 			for(int j=0;j<inputInt.get(i).size();j++) {
@@ -168,8 +168,8 @@ public class day9 {
         }
 
     }
-
-	public static void main(String args[]) throws IOException{  
+    
+    public static void main(String args[]) throws IOException{  
 		
 		long startTime = System.currentTimeMillis(); //get started
 		
@@ -179,9 +179,9 @@ public class day9 {
 	    //to get all the lowest points
         d.firstOne();
         
-        List<Integer> result=new ArrayList<Integer>();
-
         //get each basin of former points
+        List<Integer> result=new ArrayList<Integer>();
+        
         for(int i=0;i<d.points.size();i++) {
 
         	d.initStatus();
@@ -198,6 +198,7 @@ public class day9 {
        
         System.out.println(result.get(0)*result.get(1)*result.get(2));
         long endTime = System.currentTimeMillis(); //done
-	    System.out.println("running time:" + (endTime - startTime) + "ms"); //running time
-	}
+        System.out.println("running time:" + (endTime - startTime) + "ms"); //running time
+
+    }
 }
