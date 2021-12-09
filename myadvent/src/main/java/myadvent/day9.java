@@ -3,6 +3,7 @@ package myadvent;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -21,16 +22,33 @@ import static java.util.Arrays.asList;
 public class day9 {
 
 	public List<List<Integer>> inputInt = new ArrayList<List<Integer>>();
-	public List<Integer> result = new ArrayList<Integer>();
 	public List<int[]> points=new ArrayList<int[]>();
 	public int[][] pointStatus ;
 	public List<Integer> eachBasin=new ArrayList<Integer>();
 	
+	//first question to set points
 	public void firstOne() {
-		for(int i=1;i<inputInt.size()-1;i++) {
-			for(int j=1;j<inputInt.get(i).size()-1;j++) {
-				if(inputInt.get(i).get(j)<inputInt.get(i).get(j-1) && inputInt.get(i).get(j)<inputInt.get(i).get(j+1) && inputInt.get(i).get(j)<inputInt.get(i-1).get(j) && inputInt.get(i).get(j)<inputInt.get(i+1).get(j) ) {
-					result.add(inputInt.get(i).get(j));
+		for(int i=0;i<inputInt.size();i++) {
+			for(int j=0;j<inputInt.get(i).size();j++) {
+				int cPoint= inputInt.get(i).get(j);
+				//left(i,j-1) right(i,j+1) up(i-1,j),down(i+1,j)
+				int pLeft=9;
+				int pRight=9;
+				int pUp=9;
+				int pDown=9;
+				if (j-1>=0) {
+					pLeft=inputInt.get(i).get(j-1);
+				}
+				if(j+1<inputInt.get(i).size()) {
+					pRight=inputInt.get(i).get(j+1);
+				}
+				if(i-1>=0) {
+					pUp=inputInt.get(i-1).get(j);
+				}
+				if((i+1)<inputInt.size()) {
+					pDown=inputInt.get(i+1).get(j);
+				}
+				if(cPoint<pLeft && cPoint<pRight && cPoint<pUp && cPoint<pDown ) {
 					int[] t= new int[] {i,j,inputInt.get(i).get(j)};
 					points.add(t);
 				}
@@ -38,26 +56,19 @@ public class day9 {
 
 		}
 	}
-	
-	public void initStatus() {
-		int rowAll=this.inputInt.size();
-		int colAll=this.inputInt.get(0).size();
-		this.pointStatus =new int[rowAll][colAll];
-		for(int i=0;i<rowAll;i++) {
-			for(int j=0;j<colAll;j++) {
-				this.pointStatus[i][j]=-1;
+
+	//second question method should be called after firstOne
+	public void secondOne(List<int[]> aBasin,int steps) {
+		
+		for(int i=steps;i<aBasin.size();i++) {
+			List<int[]> temp=this.find4Directions(aBasin.get(i));
+			if(temp.size()>0) {
+				secondOne(temp,0);
 			}
 		}
-		for(int i=0;i<rowAll;i++) {
-			this.pointStatus[i][0]=9;
-			this.pointStatus[i][colAll-1]=9;
-		}
-		for(int i=0;i<colAll;i++) {
-			this.pointStatus[0][i]=9;
-			this.pointStatus[rowAll-1][i]=9;
-		}		
+		
 	}
-	
+		
 	private List<int[]> find4Directions(int[] point) {
 		int xRow=point[0];
 		int yCol=point[1];
@@ -70,7 +81,7 @@ public class day9 {
 		
 		List<int[]> cPoints=new ArrayList<int[]>();
 		//up
-		for(int i=xRow-1;i>0;i--) {
+		for(int i=xRow-1;i>=0;i--) {
 			if(inputInt.get(i).get(yCol)<9 && this.pointStatus[i][yCol]==-1) {
 				cPoints.add(new int[] {i,yCol,inputInt.get(i).get(yCol)});
 				pointStatus[i][yCol]=inputInt.get(i).get(yCol);
@@ -81,7 +92,7 @@ public class day9 {
 			}
 		}
 		//down
-		for(int i=xRow+1;i<row-1;i++) {
+		for(int i=xRow+1;i<row;i++) {
 			if(inputInt.get(i).get(yCol)<9 && this.pointStatus[i][yCol]==-1) {
 				cPoints.add(new int[] {i,yCol,inputInt.get(i).get(yCol)});
 				pointStatus[i][yCol]=inputInt.get(i).get(yCol);
@@ -92,7 +103,7 @@ public class day9 {
 			}
 		}
 		//left
-		for(int i=yCol-1;i>0;i--) {
+		for(int i=yCol-1;i>=0;i--) {
 			if(inputInt.get(xRow).get(i)<9 && this.pointStatus[xRow][i]==-1) {
 				cPoints.add(new int[] {xRow,i,inputInt.get(xRow).get(i)});
 				pointStatus[xRow][i]=inputInt.get(xRow).get(i);
@@ -102,7 +113,7 @@ public class day9 {
 			}		
 		}
 		//right
-		for(int i=yCol+1;i<col-1;i++) {
+		for(int i=yCol+1;i<col;i++) {
 			if(inputInt.get(xRow).get(i)<9 && this.pointStatus[xRow][i]==-1) {
 				cPoints.add(new int[] {xRow,i,inputInt.get(xRow).get(i)});
 				pointStatus[xRow][i]=inputInt.get(xRow).get(i);
@@ -114,16 +125,41 @@ public class day9 {
 		return cPoints;
 		
 	}
-	
-	public void findOnePointAll(List<int[]> cSink,int steps) {
-		
-		for(int i=steps;i<cSink.size();i++) {
-			List<int[]> temp=this.find4Directions(cSink.get(i));
-			if(temp.size()>0) {
-				findOnePointAll(temp,0);
+
+	public void initStatus() {
+
+		int rowAll=this.inputInt.size();
+		int colAll=this.inputInt.get(0).size();
+		this.pointStatus =new int[rowAll][colAll];
+		for(int i=0;i<rowAll;i++) {
+			for(int j=0;j<colAll;j++) {
+				this.pointStatus[i][j]=-1;
 			}
+		}	
+	}
+	
+	public void getInput() throws IOException {
+		File file = new File("src/main/resources/input9.txt");
+		InputStream in = new FileInputStream(file);
+
+		Reader reader = new InputStreamReader(in);
+		BufferedReader bufferedReader = new BufferedReader(reader);
+
+		String str = null;
+		//read input file and populate a List<List<Integer>>
+		while((str = bufferedReader.readLine()) != null)
+		{ 
+			String[] temp=str.split("");
+
+			List<Integer> lTemp=new ArrayList<Integer>();
+			for(int i=0;i<temp.length;i++) {
+					lTemp.add(Integer.parseInt(temp[i].trim()));
+			}
+			this.inputInt.add(lTemp);
 		}
-		
+	
+		in.close();
+		bufferedReader.close();		
 	}
 	
     public void sortList(List<Integer> list){
@@ -140,72 +176,35 @@ public class day9 {
     }
 
 	public static void main(String args[]) throws IOException{  
-
-		File file = new File("src/main/resources/input9.txt");
-		InputStream in = new FileInputStream(file);
-
-		Reader reader = new InputStreamReader(in);
-		BufferedReader bufferedReader = new BufferedReader(reader);
-
-		String str = null;
 		
-		day9 d =new day9();	
-        int row=0;
-        List<Integer> topAndBottom=new ArrayList<Integer>();
-		while((str = bufferedReader.readLine()) != null)
-		{ 
-			String[] temp=str.split("");
-			if(row==0) {
-				
-				for(int i=0;i<temp.length+2;i++) {
-					topAndBottom.add(9);
-				}
-				d.inputInt.add(topAndBottom);
-				row=row+1;
-			}
-			List<Integer> lTemp=new ArrayList<Integer>();
-			for(int i=0;i<temp.length+2;i++) {
-				if(i==0) {
-					lTemp.add(9);
-				}else if(i==temp.length+1) {
-					lTemp.add(9);
-				}else {
-					lTemp.add(Integer.parseInt(temp[i-1].trim()));
-				}
-			}
-			d.inputInt.add(lTemp);
-		}
-		d.inputInt.add(topAndBottom);
-	
-		in.close();
-		bufferedReader.close();
-
 		long startTime = System.currentTimeMillis(); //get started
 		
-	
+		day9 d =new day9();	
+		d.getInput();
+		
+	    //to get all the lowest points
         d.firstOne();
-        int r=1;
+        
         List<Integer> result=new ArrayList<Integer>();
 
+        //get each basin of former points
         for(int i=0;i<d.points.size();i++) {
 
         	d.initStatus();
         	d.eachBasin=new ArrayList<Integer>();
-
         	d.eachBasin.add(d.points.get(i)[2]);
         	List<int[]> onePoint = asList(d.points.get(i));
 
-        	d.findOnePointAll(onePoint,0);
+        	d.secondOne(onePoint,0);
         	result.add(d.eachBasin.size());
 
         }
         
         d.sortList(result);
        
-
         System.out.println(result.get(0)*result.get(1)*result.get(2));
         
-	     long endTime = System.currentTimeMillis(); //done
-	     System.out.println("running time:" + (endTime - startTime) + "ms"); //running time
+	    long endTime = System.currentTimeMillis(); //done
+	    System.out.println("running time:" + (endTime - startTime) + "ms"); //running time
 	}
 }
