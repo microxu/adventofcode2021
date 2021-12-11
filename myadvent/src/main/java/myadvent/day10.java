@@ -8,18 +8,20 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Stack;
+
+import com.alibaba.fastjson.JSONObject;
 
 import myadvent.day9.ComparatorList;
 
 public class day10 {
 	List<String> inputChunks=new ArrayList<String>();
 	List<Long> scores=new ArrayList<Long>();
-
+	final JSONObject f1 = JSONObject.parseObject("{\")\":3,\"}\":1197,\">\":25137,\"]\":57}");
+	final JSONObject f2 = JSONObject.parseObject("{\")\":1,\"}\":3,\">\":4,\"]\":2}");
 	
 	public int firstOne() {
 		int points=0;
@@ -44,22 +46,22 @@ public class day10 {
 	    		//pop
 	    		case ")":
 	    			if(!stChunks.pop().equals("(")) {
-	    				point=getPoint(singleLine[j]);
+	    				point=this.f1.getIntValue(singleLine[j]);
 	    			}
 	    			break;
 	    		case "}":
 	    			if(!stChunks.pop().equals("{")) {
-	    				point=getPoint(singleLine[j]);
+	    				point=this.f1.getIntValue(singleLine[j]);
 	    			}
 	    			break;
 	    		case ">":
 	    			if(!stChunks.pop().equals("<")) {
-	    				point=getPoint(singleLine[j]);
+	    				point=this.f1.getIntValue(singleLine[j]);
 	    			}
 	    			break;
 	    		case "]":
 	    			if(!stChunks.pop().equals("[")) {
-	    				point=getPoint(singleLine[j]);
+	    				point=this.f1.getIntValue(singleLine[j]);
 	    			}
 	    			break;
 		    	}
@@ -80,7 +82,6 @@ public class day10 {
 			String[] singleLine=this.inputChunks.get(i).split("");
 			Stack<String> stChunks=new Stack<String>();
 			for(int j=0;j<singleLine.length;j++) {
-				int point=0;
 		    	switch(singleLine[j]) {
 	    		case "(":
 	    			stChunks.push("(");
@@ -134,22 +135,23 @@ public class day10 {
 		while (!stChunks.empty()) {
 	    	switch(stChunks.pop()) {
     		case "(":
-    			totalScore= totalScore *5 + getPointFor2(")");
+    			totalScore= totalScore *5 +this.f2.getLongValue(")");
     			break;
     		case "{":
-    			totalScore= totalScore *5 + getPointFor2("}");
+    			totalScore= totalScore *5 + this.f2.getLongValue("}");
     			break;
     		case "<":
-    			totalScore= totalScore *5 + getPointFor2(">");
+    			totalScore= totalScore *5 + this.f2.getLongValue(">");
     			break;
     		case "[":
-    			totalScore= totalScore *5 + getPointFor2("]");
+    			totalScore= totalScore *5 + this.f2.getLongValue("]");
     			break;
 	    	}
 	    	
 		}
 		scores.add(totalScore);
 	}
+	
 	public void getInput() throws IOException {
 		File file = new File("src/main/resources/input10.txt");
 		InputStream in = new FileInputStream(file);
@@ -166,48 +168,6 @@ public class day10 {
 	
 		in.close();
 		bufferedReader.close();		
-	}
-
-	private int getPoint(String foundStr) {
-		int rPoint=0;
-	
-    	switch(foundStr) {
-		case ")":
-			rPoint=3;
-			break;
-		case "}":
-			rPoint=1197;
-			break;
-		case ">":
-			rPoint=25137;
-			break;
-		case "]":
-			rPoint=57;
-			break;	
-			
-    	}
-    	return rPoint;
-	}
-
-	private int getPointFor2(String foundStr) {
-		int rPoint=0;
-	
-    	switch(foundStr) {
-		case ")":
-			rPoint=1;
-			break;
-		case "}":
-			rPoint=3;
-			break;
-		case ">":
-			rPoint=4;
-			break;
-		case "]":
-			rPoint=2;
-			break;	
-			
-    	}
-    	return rPoint;
 	}
 	
 	private void sortList(List<Long> list){
@@ -228,8 +188,10 @@ public class day10 {
     	
     	day10 d =new day10();	
     	d.getInput();
-        Long firstResult=d.secondOne();
+        int firstResult=d.firstOne();
         System.out.println(firstResult);
+        long secondResult=d.secondOne();
+        System.out.println(secondResult);
         long endTime = System.currentTimeMillis(); //done
         System.out.println("running time:" + (endTime - startTime) + "ms"); //running time
 
