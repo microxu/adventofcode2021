@@ -15,56 +15,11 @@ import java.util.List;
 import java.util.Map;
 
 public class day6 {
-	public List<Long> halfResult =new ArrayList<Long>();
 	public List<Long> result =new ArrayList<Long>();
 	Map<Integer,Long> rMap = new HashMap<Integer,Long>();	
-	public List<Integer> getMidList(int timer,int days){
-		List<Integer> r =new ArrayList<Integer>();
-		List<Integer> fish=new ArrayList<Integer>();
-		fish.add(timer);
-		for(int i=0;i<days;i++) {
-			if(i==0) {
-				r=this.oneDay(fish);
-			}else {
-				r=this.oneDay(r);
-			}
-		}
-		return r;
-	}
+	private int days=0;
 	
-	public void getHalfNumbers(List<Integer> l, int days){
-		
-		for(int i=0;i<l.size();i++) {
-			List<Integer> temp= this.getMidList(l.get(i), days);
-			this.halfResult.add(Long.valueOf(temp.size()));
-		}
-	}
-	
-	public void getOneResult(List<Integer>l) {
-		long r =0;
-		for(int i=0;i<l.size();i++) {
-			r=r+halfResult.get(l.get(i));
-		}
-		result.add(r);
-	}
-	
-	private List<Integer> oneDay(List<Integer> l){
-		List<Integer> r =new ArrayList<Integer>();
-		int time8=0;
-		for(int i=0;i<l.size();i++) {
-			if(l.get(i)==0) {
-				r.add(6);
-				time8=time8+1;
-			}else {
-				r.add(l.get(i)-1);
-			}
-		}
-		for(int i=0;i<time8;i++) {
-			r.add(8);
-		}
-		return r;
-	}
-	private Map<Integer,Long> oneDay1( Map<Integer,Long> m){
+	private Map<Integer,Long> oneDay( Map<Integer,Long> m){
 		Map<Integer,Long> cMap = new HashMap<Integer,Long>();	
 		cMap.put(0, m.get(0));
 		cMap.put(1,  m.get(1));
@@ -89,7 +44,7 @@ public class day6 {
 		return cMap;
 	}
 	
-	public void otherMethod(int timer) {
+	public void afterDays(int timer) {
 		rMap = new HashMap<Integer,Long>();	
 		rMap.put(0, Long.valueOf(0));
 		rMap.put(1, Long.valueOf(0));
@@ -102,12 +57,12 @@ public class day6 {
 		rMap.put(8, Long.valueOf(0));
 		rMap.put(timer, Long.valueOf(1));
 		Map<Integer,Long> cMap = new HashMap<Integer,Long>();		
-		for(int i=0;i<256;i++) {
+		for(int i=0;i<this.days;i++) {
 			if(i==0) {
-				cMap=this.oneDay1(rMap);
+				cMap=this.oneDay(rMap);
 			}else
 			{
-				cMap=this.oneDay1(cMap);
+				cMap=this.oneDay(cMap);
 			}
 		}
 		long r=0;
@@ -115,6 +70,13 @@ public class day6 {
 			r=r+cMap.get(key);
 		}
 		result.add(r);
+	}
+	
+	public void setDays(int days) {
+		this.days=days;
+	}
+	public int getDays() {
+		return this.days;
 	}
 	
 	public static void main(String args[]) throws IOException{  
@@ -138,25 +100,15 @@ public class day6 {
 		in.close();
 		bufferedReader.close();
 
-		List<Integer> firstStep = Arrays.asList(1,2,3,4,5);
-//		List<Integer> secondStep = Arrays.asList(0,1,2,3,4,5,6,7,8);
+		List<Integer> numbers = Arrays.asList(1,2,3,4,5);
 		
 		long startTime = System.currentTimeMillis(); //获取开始时间		
 		long rr=0;
 		day6 d =new day6();		
-//		d.getHalfNumbers(secondStep, 128);
-//		
-//		for(int i=0;i<firstStep.size();i++) {
-//			List<Integer>temp=d.getMidList(firstStep.get(i),128);
-//			d.getOneResult(temp);
-//		}
-//		
-//		long rr=0;
-//		for(int i=0;i<fish.size();i++){
-//			rr=rr+d.result.get(fish.get(i)-1);
-//		}
-		for(int i=0;i<firstStep.size();i++) {
-			d.otherMethod(firstStep.get(i));
+        d.setDays(256);
+        
+		for(int i=0;i<numbers.size();i++) {
+			d.afterDays(numbers.get(i));
 		}
 		for(int i=0;i<fish.size();i++){
 			rr=rr+d.result.get(fish.get(i)-1);
