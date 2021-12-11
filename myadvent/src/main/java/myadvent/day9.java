@@ -52,12 +52,12 @@ public class day9 {
 	}
 
 	//second question method should be called after firstOne
-	public void secondOne(List<int[]> aBasin,int steps) {
+	public void secondOne(List<int[]> aBasin) {
 		
-		for(int i=steps;i<aBasin.size();i++) {
-			List<int[]> temp=this.find4Directions(aBasin.get(i));
+		for(int[] point:aBasin) {
+			List<int[]> temp=this.find4Directions(point);
 			if(temp.size()>0) {
-				secondOne(temp,0);
+				secondOne(temp);
 			}
 		}
 		
@@ -186,7 +186,7 @@ public class day9 {
         	d.eachBasin.add(d.points.get(i)[2]);
         	List<int[]> onePoint = Arrays.asList(d.points.get(i));
 
-        	d.secondOne(onePoint,0);
+        	d.secondOne(onePoint);
         	result.add(d.eachBasin.size());
 
         }

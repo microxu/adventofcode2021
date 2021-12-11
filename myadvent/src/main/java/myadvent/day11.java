@@ -20,7 +20,7 @@ public class day11 {
     public int[][] statusOneDay;
     
     public void firstOne() {
-        for(int i=0;i<195;i++) {
+        for(int i=0;i<100;i++) {
         	initStatus();
         	allPointsAfterOneDay(); 	
         }
@@ -40,16 +40,16 @@ public class day11 {
     	for(int x=0;x<this.points.size();x++) {
     		for(int y=0;y<this.points.get(x).length;y++) {
     			List<int[]> t=Arrays.asList(new int[] {x,y});
-    			aPonitAndSurroundingAfterOneDay(t,0);
+    			aPonitAndSurroundingAfterOneDay(t);
     		}
     	}  	
     }
     
-	private void aPonitAndSurroundingAfterOneDay(List<int[]> p,int steps){
-		for(int i=steps;i<p.size();i++) {
-			List<int[]> temp=onePointAfterOneDay(p.get(i));
+	private void aPonitAndSurroundingAfterOneDay(List<int[]> p){
+		for (int[] point : p) {
+			List<int[]> temp=onePointAfterOneDay(point);
 			if(temp.size()>0) {
-				aPonitAndSurroundingAfterOneDay(temp,0);
+				aPonitAndSurroundingAfterOneDay(temp);
 			}
 		}
 	}
@@ -60,17 +60,13 @@ public class day11 {
 		int value=this.points.get(x)[y];
 		boolean flash=false;
 		List<int[]> r=new ArrayList<int[]>();
-		if(value==9) {
-			points.get(x)[y]=0;
+		if(value<10) 
+			points.get(x)[y]=value+1;
+				
+		if(points.get(x)[y]==10 && statusOneDay[x][y]!=1) {
 			statusOneDay[x][y]=1;
 			flash=true;
 			this.flashs=this.flashs+1;
-		}else {
-			if(value==0 && statusOneDay[x][y]==1) {
-				
-			}else {
-				points.get(x)[y]=value+1;
-			}
 		}
 		
 		//up
@@ -81,7 +77,7 @@ public class day11 {
 					statusOneDay[x-1][y]=2;
 				}else {
 					//not flashed
-					if(statusOneDay[x-1][y]==0) {
+					if(this.points.get(x-1)[y]<10) {
 						this.points.get(x-1)[y]=this.points.get(x-1)[y]+1;
 					}
 				}
@@ -94,7 +90,7 @@ public class day11 {
 					r.add(new int[] {x+1,y});
 					statusOneDay[x+1][y]=2;
 				}else {
-					if(statusOneDay[x+1][y]==0) {
+					if(this.points.get(x+1)[y]<10) {
 						this.points.get(x+1)[y]=this.points.get(x+1)[y]+1;
 					}
 				}
@@ -108,7 +104,7 @@ public class day11 {
 					r.add(new int[] {x,y-1});
 					statusOneDay[x][y-1]=2;
 				}else {
-					if(statusOneDay[x][y-1]==0) {
+					if(this.points.get(x)[y-1]<10) {
 						this.points.get(x)[y-1]=this.points.get(x)[y-1]+1;
 					}
 				}
@@ -122,7 +118,7 @@ public class day11 {
 					r.add(new int[] {x,y+1});
 					statusOneDay[x][y+1]=2;
 				}else {
-					if(statusOneDay[x][y+1]==0) {
+					if(this.points.get(x)[y+1]<10) {
 						this.points.get(x)[y+1]=this.points.get(x)[y+1]+1;
 					}
 				}
@@ -135,7 +131,7 @@ public class day11 {
 					r.add(new int[] {x-1,y-1});
 					statusOneDay[x-1][y-1]=2;
 				}else {
-					if(statusOneDay[x-1][y-1]==0) {
+					if(this.points.get(x-1)[y-1]<10) {
 						this.points.get(x-1)[y-1]=this.points.get(x-1)[y-1]+1;
 					}
 				}
@@ -148,7 +144,7 @@ public class day11 {
 					r.add(new int[] {x+1,y-1});
 					statusOneDay[x+1][y-1]=2;
 				}else {
-					if(statusOneDay[x+1][y-1]==0) {
+					if(this.points.get(x+1)[y-1]<10) {
 						this.points.get(x+1)[y-1]=this.points.get(x+1)[y-1]+1;
 					}
 				}
@@ -161,7 +157,7 @@ public class day11 {
 					r.add(new int[] {x-1,y+1});
 					statusOneDay[x-1][y+1]=2;
 				}else {
-					if(statusOneDay[x-1][y+1]==0) {
+					if(this.points.get(x-1)[y+1]<10) {
 						this.points.get(x-1)[y+1]=this.points.get(x-1)[y+1]+1;
 					}
 				}
@@ -174,7 +170,7 @@ public class day11 {
 					r.add(new int[] {x+1,y+1});
 					statusOneDay[x+1][y+1]=2;
 				}else {
-					if(statusOneDay[x+1][y+1]==0) {
+					if(this.points.get(x+1)[y+1]<10) {
 						this.points.get(x+1)[y+1]=this.points.get(x+1)[y+1]+1;
 					}
 				}
@@ -188,6 +184,9 @@ public class day11 {
 		for(int i=0;i<this.rows;i++) {
 			for(int j=0;j<this.cols;j++) {
 				this.statusOneDay[i][j]=0;
+				if(this.points.get(i)[j]==10) {
+					this.points.get(i)[j]=0;
+				}
 			}
 		}
 	}
@@ -195,7 +194,7 @@ public class day11 {
 		boolean r=false;
     	for(int x=0;x<this.points.size();x++) {
     		for(int y=0;y<this.points.get(x).length;y++) {
-    			if(this.points.get(x)[y]!=0) {
+    			if(this.points.get(x)[y]!=10) {
     				r=true;
     				break;
     			}
