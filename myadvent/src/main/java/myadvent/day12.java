@@ -71,8 +71,7 @@ public class day12 {
 	private boolean canVisit(List<String>r, String n) {
 		if(isLowStr(n)) {
 			Set<String> set = new HashSet<>();
-	        Set<String> exist = new HashSet<>();
-	        
+			Set<String> exist = new HashSet<>();
 			for(String s:r) {
 				if(isLowStr(s)) {
 		            if (set.contains(s)) {
@@ -150,18 +149,20 @@ public class day12 {
 	}
 
 	public static void main(String args[]) throws IOException{
-    	
-    	long startTime = System.currentTimeMillis(); //get started
-    	
-    	day12 d =new day12();	
-    	d.getInput();
-        d.firstOne();
-        System.out.println(d.routes.size());
-        d.routes=new ArrayList<List<String>>();
-        d.secondOne();
-    	System.out.println(d.routes.size());
-        long endTime = System.currentTimeMillis(); //done
-        System.out.println("running time:" + (endTime - startTime) + "ms"); //running time
+		
+		long startTime = System.currentTimeMillis(); //get started
+		
+		day12 d =new day12();	
+		d.getInput();
+		d.firstOne();
+		System.out.println(d.routes.size());
+		
+		d.routes=new ArrayList<List<String>>();
+		d.secondOne();
+		System.out.println(d.routes.size());
+		
+		long endTime = System.currentTimeMillis(); //done
+		System.out.println("running time:" + (endTime - startTime) + "ms"); //running time
 
     }
 }
