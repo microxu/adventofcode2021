@@ -41,24 +41,24 @@ public class day11 {
     		for(int y=0;y<c.get(x).length;y++) {
     			if(c.get(x)[y]==10) {
     				List<int[]> t=Arrays.asList(new int[] {x,y});
-    				aPonitAndSurroundingAfterOneDay(t);
+    				surroundingAfterAFlash(t);
     			}
     		}
     	} 
     	reset();
     }
     
-	private void aPonitAndSurroundingAfterOneDay(List<int[]> p){
+	private void surroundingAfterAFlash(List<int[]> p){
 		for (int[] point : p) {
 			this.flashs+=1;
-			List<int[]> temp=onePointAfterOneDay(point);
+			List<int[]> temp=surroundings(point);
 			if(temp.size()>0) {
-				aPonitAndSurroundingAfterOneDay(temp);
+				surroundingAfterAFlash(temp);
 			}
 		}
 	}
 	
-	private List<int[]> onePointAfterOneDay(int[] point) {
+	private List<int[]> surroundings(int[] point) {
 		int x= point[0];
 		int y=point[1];
 
@@ -155,7 +155,7 @@ public class day11 {
 	}
 	
 	private void oneday() {
-    	this.points=this.points.stream().map(m->Arrays.stream(m).map((int n) ->n+1).toArray()).collect(Collectors.toList());
+		this.points=this.points.stream().map(m->Arrays.stream(m).map((int n) ->n+1).toArray()).collect(Collectors.toList());
 	}
 	
 	private List<int[]> copy(){
