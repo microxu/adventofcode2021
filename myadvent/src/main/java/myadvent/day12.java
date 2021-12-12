@@ -8,6 +8,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -15,7 +16,6 @@ import java.util.Map;
 import java.util.Set;
 
 public class day12 {
-	//List<Node> nodes =  new ArrayList<Node>();
 	public Map<String,List<String>> nodes = new HashMap<String,List<String>>();
 	
 	public List<List<String>> routes=new ArrayList<List<String>>();
@@ -39,13 +39,10 @@ public class day12 {
 				route.add("END");
 				this.routes.add(route);
 
-			}else if(alreadyHas(route,n)){
-				
-			}
-			else {
+			}else if(!alreadyHas(route,n)){
 				List<String> t=copyList(route);
 				t.add(n);
-				getChildNotesFor1(n,t);
+				getChildNotesFor1(n,t);				
 			}
 		}
 	}
@@ -57,13 +54,10 @@ public class day12 {
 				route.add("END");
 				this.routes.add(route);
 
-			}else if(!canVisit(route,n)){
-				
-			}
-			else {
+			}else if(canVisit(route,n)){
 				List<String> t=copyList(route);
 				t.add(n);
-				getChildNotesFor2(n,t);
+				getChildNotesFor2(n,t);				
 			}
 		}
 	}
@@ -95,19 +89,15 @@ public class day12 {
 		}
 		return true;
 	}
+	
 	private boolean alreadyHas(List<String> r,String n) {
-
 		if(isLowStr(n)) {
-			for(String s:r) {
-				if(s.equals(n)) {
-					return true;
-				}	
-			}		
+			return r.stream().anyMatch(s->s.equals(n));		
 		}
 		return false;
 	}
 	
-	private boolean isLowStr(String word) {
+	private boolean isLowStr(String word) {		
 		for(int i = 0; i < word.length(); i++) {
 			char c = word.charAt(i);
 			if (Character.isUpperCase(c)) {
@@ -132,12 +122,7 @@ public class day12 {
 			String start=sTemp[0].trim();
 			String end=sTemp[1].trim();
 			
-			if(sTemp[1].trim().equals("start")) {
-				start=sTemp[1].trim();
-				end=sTemp[0].trim();			
-			}
-
-			if(sTemp[0].trim().equals("end")) {
+			if(sTemp[1].trim().equals("start")||sTemp[0].trim().equals("end")) {
 				start=sTemp[1].trim();
 				end=sTemp[0].trim();			
 			}
@@ -170,6 +155,9 @@ public class day12 {
     	
     	day12 d =new day12();	
     	d.getInput();
+        d.firstOne();
+        System.out.println(d.routes.size());
+        d.routes=new ArrayList<List<String>>();
         d.secondOne();
     	System.out.println(d.routes.size());
         long endTime = System.currentTimeMillis(); //done
