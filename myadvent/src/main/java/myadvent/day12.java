@@ -8,7 +8,6 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -16,7 +15,7 @@ import java.util.Map;
 import java.util.Set;
 
 public class day12 {
-	public Map<String,List<String>> nodes = new HashMap<String,List<String>>();
+	private Map<String,List<String>> nodes = new HashMap<String,List<String>>();
 	
 	public List<List<String>> routes=new ArrayList<List<String>>();
 
@@ -38,7 +37,6 @@ public class day12 {
 			if(n.equals("end")) {
 				route.add("END");
 				this.routes.add(route);
-
 			}else if(!alreadyHas(route,n)){
 				List<String> t=copyList(route);
 				t.add(n);
@@ -53,7 +51,6 @@ public class day12 {
 			if(n.equals("end")) {
 				route.add("END");
 				this.routes.add(route);
-
 			}else if(canVisit(route,n)){
 				List<String> t=copyList(route);
 				t.add(n);
@@ -61,6 +58,7 @@ public class day12 {
 			}
 		}
 	}
+	
 	private List<String> copyList(List<String> l){
 		List<String> n=new ArrayList<String>();
 		for(String s:l)
@@ -74,11 +72,10 @@ public class day12 {
 			Set<String> exist = new HashSet<>();
 			for(String s:r) {
 				if(isLowStr(s)) {
-		            if (set.contains(s)) {
-		                exist.add(s);
-		            } else {
-		                set.add(s);
-		            }
+					if (set.contains(s)) {
+						exist.add(s);
+						set.add(s);
+					}
 				}	
 			}
 			if(exist.contains(n))
@@ -96,6 +93,7 @@ public class day12 {
 		return false;
 	}
 	
+	// Here for performs better than stream
 	private boolean isLowStr(String word) {		
 		for(int i = 0; i < word.length(); i++) {
 			char c = word.charAt(i);
@@ -133,6 +131,7 @@ public class day12 {
 				n.add(end);
 				this.nodes.put(start, n);
 			}
+			
 			if(!end.equals("end") && ! start.equals("start")) {
 				if(this.nodes.get(end)!=null) {					
 					this.nodes.get(end).add(start);
