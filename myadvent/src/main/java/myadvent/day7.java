@@ -76,7 +76,7 @@ public class day7 {
 		}
 		in.close();
 		bufferedReader.close();
-		long startTime = System.currentTimeMillis(); //获取开始时间	
+		long startTime = System.currentTimeMillis(); 
 		day7 d =new day7();	
 		d.makeADictionary(1200);
 		for(int i=1;i<1200;i++) {
@@ -84,11 +84,11 @@ public class day7 {
 			d.total.add(r);
 		}
 		//System.out.println(Arrays.toString(d.total.toArray()));
-		 System.out.println("最小值: " + Collections.min(d.total));
+		 System.out.println("min: " + Collections.min(d.total));
 		 
 		// System.out.println((new Double(rr)).longValue());
-	     long endTime = System.currentTimeMillis(); //获取结束时间
-	     System.out.println("程序运行时间：" + (endTime - startTime) + "ms"); //输出程序运行时间
+	     long endTime = System.currentTimeMillis(); 
+	     System.out.println("running time" + (endTime - startTime) + "ms"); 
 	}
 
 	

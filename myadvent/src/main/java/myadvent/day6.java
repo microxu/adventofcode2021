@@ -102,7 +102,7 @@ public class day6 {
 
 		List<Integer> numbers = Arrays.asList(1,2,3,4,5);
 		
-		long startTime = System.currentTimeMillis(); //获取开始时间		
+		long startTime = System.currentTimeMillis(); //
 		long rr=0;
 		day6 d =new day6();		
         d.setDays(256);
@@ -114,8 +114,8 @@ public class day6 {
 			rr=rr+d.result.get(fish.get(i)-1);
 	    }
         System.out.println(rr);
-        long endTime = System.currentTimeMillis(); //获取结束时间
-        System.out.println("程序运行时间：" + (endTime - startTime) + "ms"); //输出程序运行时间
+        long endTime = System.currentTimeMillis(); //
+        System.out.println("running time: " + (endTime - startTime) + "ms"); //
 
 	}
 }

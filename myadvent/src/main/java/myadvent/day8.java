@@ -9,7 +9,6 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -105,7 +104,6 @@ public class day8 {
 		BufferedReader bufferedReader = new BufferedReader(reader);
 
 		String str = null;
-		List<Integer> crab = new ArrayList<Integer>();
         
         List<String> lines=new ArrayList<String>();
 		while((str = bufferedReader.readLine()) != null)
@@ -115,7 +113,7 @@ public class day8 {
 		in.close();
 		bufferedReader.close();
 		int result=0;
-		long startTime = System.currentTimeMillis(); //获取开始时间	
+		long startTime = System.currentTimeMillis(); //get started
 		day8 d =new day8();	
         for(int i=0;i<lines.size();i++) {
 			String[] t=lines.get(i).split("\\|");
@@ -139,7 +137,7 @@ public class day8 {
         }
         System.out.println(result);
 
-	     long endTime = System.currentTimeMillis(); //获取结束时间
-	     System.out.println("程序运行时间：" + (endTime - startTime) + "ms"); //输出程序运行时间
+	     long endTime = System.currentTimeMillis(); //
+	     System.out.println("running time: " + (endTime - startTime) + "ms"); //running time
 	}
 }

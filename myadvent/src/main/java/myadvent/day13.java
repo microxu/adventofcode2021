@@ -21,7 +21,7 @@ public class day13 {
 		String fold=folds.get(0);
 
 		String[] f=fold.split("=");
-	    switch(f[0]) {
+		switch(f[0]) {
     		case "x":
     			in= foldX(Integer.parseInt(f[1].trim()),in); 
     			break;
@@ -49,7 +49,7 @@ public class day13 {
 	}
 	
 	private int[][] foldX(int x,int[][] in) {
-        int xRow=in.length-1;
+		int xRow=in.length-1;
 		int[][] temp=new int[x][in[0].length];
 		for(int i=0;i<x;i++) {
 			for(int j=0;j<in[i].length;j++) {
@@ -60,7 +60,7 @@ public class day13 {
 	}
 
 	private int[][] foldY(int y,int[][] in) {
-        int yCol=in[0].length-1;
+		int yCol=in[0].length-1;
 		int[][] temp=new int[in.length][y];
 		for(int i=0;i<in.length;i++) {
 			for(int j=0;j<y;j++) {
@@ -124,7 +124,7 @@ public class day13 {
 		day13 d =new day13();	
 		d.getInput();
 		
-        int r=d.firstOne();
+		int r=d.firstOne();
 		System.out.println(r);
 		
 		d.secondOne();
