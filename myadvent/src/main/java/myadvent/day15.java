@@ -112,10 +112,10 @@ public class day15 {
 		return c;
 	}
 	
-	public void getInput2() {
-		List<int[]> s=colTimes();
+	public void getInput2(int times) {
+		List<int[]> s=colTimes(times);
 		
-		for(int j=0;j<5;j++) {
+		for(int j=0;j<times;j++) {
 			if(j>0)
 				s=newRow(s);	
 			for(int[] l : s)
@@ -134,27 +134,23 @@ public class day15 {
 		return r;
 	}
 	
-	private List<int[]> colTimes(){
+	private List<int[]> colTimes(int times){
 		List<int[]> r=new ArrayList<int[]> ();
 		
 		for(int[] l:points) {
 			int len=l.length;
-			int[] newline=new int[len*5];
-            copyLine(l,newline);
+			int[] newline=new int[len*times];
+			int[] n= l;
+			for(int j=0;j<times;j++) {
+				if(j>0)
+					n=newLine(n);
+				for(int i=0;i<n.length;i++) {
+					newline[i+j*l.length]=n[i];
+				}
+			}
 			r.add(newline);
 		}	
 		return r;
-	}
-	
-	private void copyLine(int[] l,int[] nLine) {
-		int[] n= l;
-		for(int j=0;j<5;j++) {
-			if(j>0)
-				n=newLine(n);
-			for(int i=0;i<n.length;i++) {
-				nLine[i+j*l.length]=n[i];
-			}
-		}
 	}
 	
 	private int[] newLine(int[] l) {
@@ -203,7 +199,7 @@ public class day15 {
 		day15 d =new day15();	
 		d.getInput();
 		d.firstOne();
-		d.getInput2();
+		d.getInput2(5);
 		d.secondOne();
 
 		long endTime = System.currentTimeMillis(); //done
