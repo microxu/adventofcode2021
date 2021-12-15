@@ -16,7 +16,7 @@ public class day15 {
 
 	List<int[]> points= new ArrayList<int[]>();
 	List<int[]> points2= new ArrayList<int[]>();
-	int[][] tempPoints;
+	int[][] pointsWeight;
 	int row;
 	int col;
 	
@@ -24,11 +24,11 @@ public class day15 {
 
 		Map<String,Integer> cRouts = new HashMap<String,Integer>();
 		cRouts.put("0,0", 1);
-		tempPoints[0][0]=1;
+		pointsWeight[0][0]=1;
 		while(cRouts.size()>0) {
 			cRouts=getChildNotes(cRouts);
 		}
-		System.out.println(tempPoints[row-1][col-1]-1);
+		System.out.println(pointsWeight[row-1][col-1]-1);
 
 	}
 
@@ -36,13 +36,13 @@ public class day15 {
 		points=points2;
 		Map<String,Integer> cRouts = new HashMap<String,Integer>();
 		cRouts.put("0,0", 1);
-		tempPoints[0][0]=1;
+		pointsWeight[0][0]=1;
 
 		while(cRouts.size()>0) {
 			cRouts=getChildNotes(cRouts);
 		}
 		
-		System.out.println(tempPoints[row-1][col-1]-1);
+		System.out.println(pointsWeight[row-1][col-1]-1);
 
 	}
 
@@ -57,54 +57,54 @@ public class day15 {
 			String k="";
 			Integer w;
 			if(y+1<col) {
-				v=this.points.get(x)[y+1] + tempPoints[x][y];
+				v=this.points.get(x)[y+1] + pointsWeight[x][y];
 				k=String.valueOf(x)+","+String.valueOf(y+1);
-				if(tempPoints[x][y+1]==0) {
-					tempPoints[x][y+1]=v;					
+				if(pointsWeight[x][y+1]==0) {
+					pointsWeight[x][y+1]=v;					
 					c.put(k, this.points.get(x)[y+1]);
 				}
-				else if(tempPoints[x][y+1]>=v) {
-					tempPoints[x][y+1]=v;
+				else if(pointsWeight[x][y+1]>=v) {
+					pointsWeight[x][y+1]=v;
 					c.put(k, this.points.get(x)[y+1]);
 				}
 
 			}
 			//down
 			if(x+1<row) {
-				v=this.points.get(x+1)[y]  + tempPoints[x][y];
+				v=this.points.get(x+1)[y]  + pointsWeight[x][y];
 				k=String.valueOf(x+1)+","+String.valueOf(y);
-				if(tempPoints[x+1][y]==0) {
-					tempPoints[x+1][y]=v;					
+				if(pointsWeight[x+1][y]==0) {
+					pointsWeight[x+1][y]=v;					
 					c.put(k, this.points.get(x+1)[y]);
 				}
-				else if(tempPoints[x+1][y]>=v) {
-					tempPoints[x+1][y]=v;
+				else if(pointsWeight[x+1][y]>=v) {
+					pointsWeight[x+1][y]=v;
 					c.put(k, this.points.get(x+1)[y]);
 				}
 			}
 			//left
 			if(y-1>=0) {
-				v=this.points.get(x)[y-1] + tempPoints[x][y];
+				v=this.points.get(x)[y-1] + pointsWeight[x][y];
 				k=String.valueOf(x)+","+String.valueOf(y-1);
-				if(tempPoints[x][y-1]==0) {
-					tempPoints[x][y-1]=v;					
+				if(pointsWeight[x][y-1]==0) {
+					pointsWeight[x][y-1]=v;					
 					c.put(k, this.points.get(x)[y-1]);
 				}
-				else if(tempPoints[x][y-1]>=v) {
-					tempPoints[x][y-1]=v;
+				else if(pointsWeight[x][y-1]>=v) {
+					pointsWeight[x][y-1]=v;
 					c.put(k, this.points.get(x)[y-1]);
 				}
 			}
 			//up
 			if(x-1>=0) {
-				v=this.points.get(x-1)[y]  + tempPoints[x][y];
+				v=this.points.get(x-1)[y]  + pointsWeight[x][y];
 				k=String.valueOf(x-1)+","+String.valueOf(y);
-				if(tempPoints[x-1][y]==0) {
-					tempPoints[x-1][y]=v;					
+				if(pointsWeight[x-1][y]==0) {
+					pointsWeight[x-1][y]=v;					
 					c.put(k, this.points.get(x-1)[y]);
 				}
-				else if(tempPoints[x-1][y]>=v) {
-					tempPoints[x-1][y]=v;
+				else if(pointsWeight[x-1][y]>=v) {
+					pointsWeight[x-1][y]=v;
 					c.put(k, this.points.get(x-1)[y]);
 				}
 			}			
@@ -123,7 +123,7 @@ public class day15 {
 		}
 		row=points2.size();
 		col=points2.get(0).length;
-		tempPoints=new int[row][col];
+		pointsWeight=new int[row][col];
 	}
 	
 	private List<int[]> newRow(List<int[]> rows){
@@ -189,7 +189,7 @@ public class day15 {
 		
 		row=points.size();
 		col=points.get(0).length;
-		tempPoints=new int[row][col];
+		pointsWeight=new int[row][col];
 	}
 	
 	public static void main(String args[]) throws IOException{
