@@ -43,7 +43,6 @@ public class day15 {
 		}
 		
 		System.out.println(pointsWeight[row-1][col-1]-1);
-
 	}
 
 	private Map<String,Integer> getChildNotes(Map<String,Integer> n){
@@ -113,6 +112,7 @@ public class day15 {
 	}
 	
 	public void getInput2(int times) {
+		
 		List<int[]> s=colTimes(times);
 		
 		for(int j=0;j<times;j++) {
