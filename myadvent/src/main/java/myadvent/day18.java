@@ -33,13 +33,10 @@ public class day18 {
 	}
 
 	public void secondOne() {
-		LinkedList<String> list = new LinkedList<>();
-		
 		for(int i=0;i<sInput.size();i++) {
-			list = new LinkedList<>();
 			for(int j=0;j<sInput.size();j++) {
 				if(i!=j) {
-					System.out.println("j="+String.valueOf(j));
+					//only use one linkedlist can improve performance
 					LinkedList<String> nlist = new LinkedList<>();
 					copy2StrToList(sInput.get(i),sInput.get(j),nlist);
 					reduceNum(nlist);	
@@ -48,7 +45,6 @@ public class day18 {
 						if(!nlist.get(m).equals("[") && !nlist.get(m).equals("]"))
 							result.add(Integer.valueOf(nlist.get(m)));
 					}
-					Runtime.getRuntime().gc();
 				}
 			}
 
@@ -179,8 +175,8 @@ public class day18 {
 		}
 		nlist.addFirst("[");
 		nlist.addLast("]");
-		Runtime.getRuntime().gc();
 	}
+	
 	public void getInput() throws IOException {
 		
 		File file = new File("src/main/resources/input18.txt");
