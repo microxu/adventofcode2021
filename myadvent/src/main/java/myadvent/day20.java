@@ -18,14 +18,13 @@ import org.apache.commons.lang3.StringUtils;
 public class day20 {
 	public int[] en=new int[512];
 	public List<List<Integer>> input=new ArrayList<>();
-	int rows=0;
-	int cols=0;
+
+	
 	public void firstOne() {
 		List<List<Integer>> c=new ArrayList<>();
 		c=this.input;
 		adjustInput(c,20);
 		for(int i=0;i<2;i++)
-			//adjustInput(c);
 			c=oneStep(c,i);
 		
 		int r=getlights(c);
@@ -36,8 +35,8 @@ public class day20 {
 		List<List<Integer>> c=new ArrayList<>();
 		c=this.input;
 		adjustInput(c,120);
+		
 		for(int i=0;i<50;i++)
-			//adjustInput(c);
 			c=oneStep(c,i);
 		
 		int r=getlights(c);
@@ -59,9 +58,8 @@ public class day20 {
 				String v8=getSourcePoints(i+1,j,cInput,times);
 				String v9=getSourcePoints(i+1,j+1,cInput,times);
 				String t=v1+v2+v3+v4+v5+v6+v7+v8+v9;
-				//String t=String.valueOf(v1)+String.valueOf(v2)+String.valueOf(v3) +String.valueOf(v4)+String.valueOf(v5)+String.valueOf(v6) + String.valueOf(v7)+String.valueOf(v8)+String.valueOf(v9);
+
 				int index=Integer.parseUnsignedInt(t,2);
-				//input.get(i).set(j, en[index]);
 				nl.add(en[index]);
 				
 			}
@@ -110,6 +108,7 @@ public class day20 {
 	    		   return "0";
 	       }
 	}
+	
 	public void getInput() throws IOException {
 
 		File file = new File("src/main/resources/input20.txt");
@@ -150,9 +149,6 @@ public class day20 {
 		
 		in.close();
 		bufferedReader.close();	
-		
-		this.rows=this.input.size();
-		this.cols=this.input.get(0).size();
 	}
 	
 	public static void main(String args[]) throws IOException{
