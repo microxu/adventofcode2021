@@ -1,19 +1,10 @@
 package myadvent;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.Reader;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import org.apache.commons.lang3.StringUtils;
 
 public class day21 {
 
@@ -75,50 +66,28 @@ public class day21 {
 			for(int j=1;j<4;j++)
 				for(int m=1;m<4;m++) {
 					int new_pos1;
-			    	int new_s1=0;
-			    	if((i+j+m+pos1)%10==0) {
-			    		new_pos1=10;
-			    		new_s1=s1+new_pos1;
-			    	}else {
-			    		new_pos1=(i+j+m+pos1)%10;
-			    		new_s1=s1+new_pos1;
-			    	}
-			    	List<Long> t=secondOne(pos2,new_pos1,s2,new_s1);
-			    	results.set(0, results.get(0)+t.get(1));
-			    	results.set(1, results.get(1)+t.get(0));
-			    };
+					int new_s1=0;
+					if((i+j+m+pos1)%10==0) {
+						new_pos1=10;
+						new_s1=s1+new_pos1;
+					}else {
+						new_pos1=(i+j+m+pos1)%10;
+						new_s1=s1+new_pos1;
+					}
+					List<Long> t=secondOne(pos2,new_pos1,s2,new_s1);
+					results.set(0, results.get(0)+t.get(1));
+					results.set(1, results.get(1)+t.get(0));
+				};
 		rollState.put(state_key, results);
 		return results;
 	}
 	
-	public void getInput() throws IOException {
-
-		File file = new File("src/main/resources/input21.txt");
-		InputStream in = new FileInputStream(file);
-
-		Reader reader = new InputStreamReader(in);
-		BufferedReader bufferedReader = new BufferedReader(reader);
-
-		String str = null;
-
-		while((str = bufferedReader.readLine()) != null)
-		{
-			if(StringUtils.isNotBlank(str)) {
-
-			}
-		}
-		
-		in.close();
-		bufferedReader.close();	
-		
-	}
-	
-	public static void main(String args[]) throws IOException{
+	public static void main(String args[]) {
 		
 		long startTime = System.currentTimeMillis(); //get started
 		
 		day21 d =new day21();	
-		//d.getInput();
+		
 		List<Long> r=d.secondOne(9, 3,0,0);
 		System.out.println(r);
 		

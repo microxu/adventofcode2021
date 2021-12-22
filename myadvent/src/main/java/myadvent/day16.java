@@ -48,8 +48,9 @@ public class day16 {
 	//learned from ericvan
 	private List<String> decode(int pos) {
 		
-		int version=binaryToInteger( line.substring(pos, pos+3));
-		int type=binaryToInteger(line.substring(pos+3, pos+6));
+		int version=Integer.valueOf(binaryToInteger( line.substring(pos, pos+3)));
+		int type=Integer.valueOf(binaryToInteger(line.substring(pos+3, pos+6)));
+		
 		long val=Long.valueOf(0);
 		if(type==4) {
 			pos+=6;
@@ -60,7 +61,7 @@ public class day16 {
 			}
 			pos+=5;
 			bin += line.substring(pos-4,pos);
-			val=bin2Dec(bin);
+			val=Long.valueOf(binaryToInteger(bin));
 			
 		}else {
 			int n;
@@ -69,7 +70,7 @@ public class day16 {
 			pos+=6;
 			if(line.substring(pos, pos+1).equals("0")) {
 				pos+=16;
-				n=pos+binaryToInteger(line.substring(pos-15, pos));
+				n=pos + Integer.valueOf(binaryToInteger(line.substring(pos-15, pos)));
 				while(pos<n) {
 					r=decode(pos);
 					pos=Integer.valueOf(r.get(2));
@@ -78,7 +79,7 @@ public class day16 {
 				}
 			}else {
 				pos+=12;
-				n=binaryToInteger(line.substring(pos-11, pos));
+				n=Integer.valueOf(binaryToInteger(line.substring(pos-11, pos)));
 				for(int i=0;i<n;i++) {
 					r=decode(pos);
 					pos=Integer.valueOf(r.get(2));
@@ -114,16 +115,25 @@ public class day16 {
 		
 	}
 
-    private long bin2Dec(String binaryString){
-        long sum = Long.valueOf(0);
-        for(int i = 0;i < binaryString.length();i++){
-            char ch = binaryString.charAt(i);
-            if(ch > '2' || ch < '0')
-                throw new NumberFormatException(String.valueOf(i));
-            sum = sum * 2 + (binaryString.charAt(i) - '0');
-        }
-        return sum;
-    }
+//    public long bin2Dec(String binaryString){
+//        long sum = Long.valueOf(0);
+//        for(int i = 0;i < binaryString.length();i++){
+//            char ch = binaryString.charAt(i);
+//            if(ch > '2' || ch < '0')
+//                throw new NumberFormatException(String.valueOf(i));
+//            sum = sum * 2 + (binaryString.charAt(i) - '0');
+//        }
+//        return sum;
+//    }
+
+	private String binaryToInteger(String binary) {
+		char[] numbers = binary.toCharArray();
+		long result = 0;
+		for(int i=numbers.length - 1; i>=0; i--)
+			if(numbers[i]=='1')
+				result += Math.pow(2, (numbers.length-i - 1));
+		return String.valueOf(result);
+	}
 	
 	private Long sum(List<Long> n) {
 		Long r=Long.valueOf(0);
@@ -161,14 +171,7 @@ public class day16 {
 		return r;
 	}
 	
-	public int binaryToInteger(String binary) {
-	    char[] numbers = binary.toCharArray();
-	    int result = 0;
-	    for(int i=numbers.length - 1; i>=0; i--)
-	        if(numbers[i]=='1')
-	            result += Math.pow(2, (numbers.length-i - 1));
-	    return result;
-	}
+
 	
 	public void getInput() throws IOException {
 		
@@ -199,7 +202,7 @@ public class day16 {
 		day16 d =new day16();	
 		d.getInput();
         d.firstOne();
-        
+
 		long endTime = System.currentTimeMillis(); //done
 		System.out.println("running time: " + (endTime - startTime) + "ms"); //running time
 
