@@ -34,7 +34,7 @@ public class day22 {
 			int z1=Integer.valueOf(rangs.get(4));
 			int z2=Integer.valueOf(rangs.get(5));
 			
-			System.out.printf("x1=%d, x2=%d,y1=%d,y2=%d,z1=%d,z2=%d\n",x1,x2,y1,y2,z1,z2);
+			//System.out.printf("x1=%d, x2=%d,y1=%d,y2=%d,z1=%d,z2=%d\n",x1,x2,y1,y2,z1,z2);
 
 			
 			if(x1<=50 && x1>=-50 && x2<=50 && x2>=-50 && y1<=50 && y1>=-50 && y2<=50 && y2>=-50 && z1<=50 && z1>=-50 && z2<=50 && z2>=-50) {
@@ -109,6 +109,7 @@ public class day22 {
 		 
 		 System.out.println(sum);
    }
+   
    class Step{
 	   public int type;
 	   public int x0,x1,y0,y1,z0,z1;
@@ -175,9 +176,11 @@ public class day22 {
 	public static void main(String args[]) throws IOException{
 		
 		long startTime = System.currentTimeMillis(); //get started
-		
+		System.out.println(startTime); //running time
 		day22 d =new day22();	
 		d.getInput();
+
+		d.firstOne();
 
 		d.secondOne();
 
